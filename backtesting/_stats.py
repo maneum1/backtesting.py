@@ -138,6 +138,11 @@ def compute_stats(
     s.loc['Avg. Trade Duration'] = _round_timedelta(durations.mean())
     s.loc['Profit Factor'] = returns[returns > 0].sum() / (abs(returns[returns < 0].sum()) or np.nan)  # noqa: E501
     s.loc['Expectancy [%]'] = returns.mean() * 100
+
+    # Martin Neumann addition of Expactancy Calculation
+    # s.loc['Expectancy'] = (win_rate * returns[returns > 0].sum() / n_trades) - ((1-win_rate) * (abs(returns[returns < 0].sum()) / n_trades))
+    s.loc['Expectancy MN'] = (win_rate * pl[pl > 0].sum() / n_trades) - ((1-win_rate) * (abs(pl[pl < 0].sum()) / n_trades))    
+
     s.loc['SQN'] = np.sqrt(n_trades) * pl.mean() / (pl.std() or np.nan)
     s.loc['Kelly Criterion'] = win_rate - (1 - win_rate) / (pl[pl > 0].mean() / -pl[pl < 0].mean())
 
