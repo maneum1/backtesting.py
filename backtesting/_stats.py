@@ -141,7 +141,7 @@ def compute_stats(
 
     # Martin Neumann addition of Expactancy Calculation
     # s.loc['Expectancy'] = (win_rate * returns[returns > 0].sum() / n_trades) - ((1-win_rate) * (abs(returns[returns < 0].sum()) / n_trades))
-    s.loc['Expectancy MN'] = (win_rate * pl[pl > 0].sum() / n_trades) - ((1-win_rate) * (abs(pl[pl < 0].sum()) / n_trades))    
+    s.loc['Expectancy MN'] = (win_rate * pl[pl > 0].mean()) - ((1-win_rate) * (abs(pl[pl < 0].mean())))
 
     s.loc['SQN'] = np.sqrt(n_trades) * pl.mean() / (pl.std() or np.nan)
     s.loc['Kelly Criterion'] = win_rate - (1 - win_rate) / (pl[pl > 0].mean() / -pl[pl < 0].mean())
